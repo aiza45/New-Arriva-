@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Baby Boy | Hashir & Esha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #e6f7ff 0%, #b3e0ff 100%);
+            color: #1a5276;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: #1a5276;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        .header h1::after {
+            content: "✦";
+            position: absolute;
+            right: -40px;
+            top: 0;
+            color: #3498db;
+            font-size: 2rem;
+            animation: spin 8s linear infinite;
+        }
+
+        .header h1::before {
+            content: "✦";
+            position: absolute;
+            left: -40px;
+            top: 0;
+            color: #3498db;
+            font-size: 2rem;
+            animation: spin 8s linear infinite reverse;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #2874a6;
+            line-height: 1.6;
+        }
+
+        .family-name {
+            background: linear-gradient(135deg, #3498db, #1a5276);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        /* Card Grid Styles */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: all 0.5s ease;
+            filter: brightness(0.7);
+        }
+
+        .card.active .card-img {
+            filter: brightness(1);
+        }
+
+        .img-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3498db, #1a5276);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            transition: all 0.5s ease;
+            opacity: 0.9;
+        }
+
+        .card.active .img-cover {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .img-cover i {
+            animation: pulse 2s infinite;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+            position: relative;
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #1a5276;
+            position: relative;
+            display: inline-block;
+        }
+
+        .card h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        .card:hover h3::after {
+            width: 100%;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #2874a6;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card-message {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f0f9ff;
+            padding: 0 20px;
+            font-style: italic;
+            color: #2874a6;
+            border-left: 3px solid #3498db;
+        }
+
+        .card.active .card-message {
+            max-height: 200px;
+            padding: 15px 20px;
+        }
+
+        .card-number {
+            position: absolute;
+            top: -15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            z-index: 2;
+        }
+
+        /* Special Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(52, 152, 219, 0.15);
+            font-size: 2rem;
+            animation: float 15s infinite linear;
+        }
+
+        .special-card {
+            position: relative;
+            border: 2px solid #3498db;
+        }
+
+        .special-card::before {
+            content: "★ Special Message";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .family-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .family-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #1a5276, #3498db);
+        }
+
+        .family-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #1a5276;
+        }
+
+        .family-members {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .family-member {
+            text-align: center;
+        }
+
+        .member-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b3e0ff 0%, #3498db 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .family-member:hover .member-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .member-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #1a5276;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            color: #2874a6;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 40px;
+            color: #1a5276;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+        }
+
+        .hearts {
+            color: #ff6b6b;
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            margin: 15px 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* New Animation Elements */
+        .click-indicator {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        @keyframes clickEffect {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2);
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.6; transform: scale(0.95); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes reveal {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .family-members {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header h1::after, .header h1::before {
+                display: none;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .family-members {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element" style="top: 10%; left: 5%; animation-duration: 20s;">♡</div>
+        <div class="floating-element" style="top: 20%; left: 90%; animation-duration: 25s;">✦</div>
+        <div class="floating-element" style="top: 40%; left: 7%; animation-duration: 18s;">♡</div>
+        <div class="floating-element" style="top: 60%; left: 95%; animation-duration: 22s;">✦</div>
+        <div class="floating-element" style="top: 80%; left: 10%; animation-duration: 17s;">♡</div>
+        <div class="floating-element" style="top: 30%; left: 80%; animation-duration: 30s;">✦</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>A New Little Son</h1>
+            <p>Celebrating the upcoming arrival of the newest addition to the <span class="family-name">Hashir & Esha</span> family</p>
+        </div>
+
+        <div class="family-section">
+            <h2>Our Beautiful Family</h2>
+            <p>We're growing from three to four and couldn't be more excited!</p>
+            
+            <div class="family-members">
+                <div class="family-member">
+                    <div class="member-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="member-name">Hashir</div>
+                    <div class="member-role">Proud Father</div>
+                </div>
+                
+                <div class="family-member">
+                    <div class="member-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="member-name">Esha</div>
+                    <div class="member-role">Wonderful Mother</div>
+                </div>
+                
+                <div class="family-member">
+                    <div class="member-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="member-name">Shahzain</div>
+                    <div class="member-role">Excited Big Brother</div>
+                </div>
+                
+                <div class="family-member">
+                    <div class="member-icon">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <div class="member-name">Baby Boy</div>
+                    <div class="member-role">Coming Soon!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-grid">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="iage.png" alt="Baby ultrasound" class="card-img">
+                    <div class="img-cover"><i class="fas fa-eye"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>Our Little Miracle</h3>
+                    <p>We've been waiting to meet you for so long!</p>
+                </div>
+                <div class="card-message">
+                    Every day we grow more excited to hold you in our arms. You're already so loved!
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card special-card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="ook.png" alt="Baby holding parent's hand" class="card-img">
+                    <div class="img-cover"><i class="fas fa-hand-holding-heart"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>Tiny Fingers, Big Love</h3>
+                    <p>We can't wait to hold your tiny hand.</p>
+                </div>
+                <div class="card-message">
+                    You're going to bring so much love and joy into our lives. 
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="outfits.jpg" alt="Baby clothes" class="card-img">
+                    <div class="img-cover"><i class="fas fa-tshirt"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>So Many Outfits!</h3>
+                    <p>You're going to be the best-dressed baby in town.</p>
+                </div>
+                <div class="card-message">
+                    Big brother Shahzain has already picked out your first outfit! He says blue is definitely your color.
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="image.png" alt="Nursery room" class="card-img">
+                    <div class="img-cover"><i class="fas fa-bed"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>Your Cozy Nursery</h3>
+                    <p>We've prepared a special place just for you.</p>
+                </div>
+                <div class="card-message">
+                    We hope you love your new room as much as we loved creating it for you. We've filled it with love and soft blue colors.
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="card special-card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="feet.jpg" alt="Baby shoes" class="card-img">
+                    <div class="img-cover"><i class="fas fa-shoe-prints"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>Tiny Feet, Big Steps</h3>
+                    <p>Your little footsteps will bring joy to our home.</p>
+                </div>
+                <div class="card-message">
+                    We can't wait to see you take your first steps, just like your big brother did! We know you'll be running around with Shahzain in no time.
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="boy.jpg" alt="Baby items" class="card-img">
+                    <div class="img-cover"><i class="fas fa-baby-carriage"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>Our Growing Family</h3>
+                    <p>Hashir, Esha, and Shahzain can't wait to meet you!</p>
+                </div>
+                <div class="card-message">
+                    We're so excited to welcome you to our family, little one! Love, Mama & Baba. 
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="download.png" alt="Family silhouette" class="card-img">
+                    <div class="img-cover"><i class="fas fa-users"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>From Three to Four</h3>
+                    <p>Our family is growing and we couldn't be happier!</p>
+                </div>
+                <div class="card-message">
+                  Shahzain is so excited to become a big brother and show you all his toys. He's been practicing reading stories to you already!
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="card">
+                <div class="card-number"></div>
+                <div class="card-img-container">
+                    <img src="ab0d53c1b5446473a50ff85c10155df8.jpg" alt="Baby sleeping" class="card-img">
+                    <div class="img-cover"><i class="fas fa-moon"></i></div>
+                </div>
+                <div class="card-content">
+                    <h3>Sweet Dreams</h3>
+                    <p>We hope all your dreams are as sweet as you are.</p>
+                </div>
+                <div class="card-message">
+                    We promise to always be there to sing you lullabies and comfort you. 
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>With love from your family and friends</p>
+            <div class="hearts">♥ ♥ ♥</div>
+            <p>© 2025 Baby Shower Celebration | Welcome to the world, little one!</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    
+                    // Create ripple effect
+                    createRippleEffect(this);
+                });
+            });
+            
+            // Create floating elements dynamically
+            const floatingContainer = document.querySelector('.floating-elements');
+            const symbols = ['♡', '✦', '♡', '✦', '♡', '✦', '♡', '✦'];
+            
+            for (let i = 0; i < 20; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                element.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+                element.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                element.style.animationDelay = Math.random() * 5 + 's';
+                element.style.opacity = Math.random() * 0.3 + 0.1;
+                floatingContainer.appendChild(element);
+            }
+            
+            // Add confetti effect on click
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('card') || e.target.closest('.card')) return;
+                
+                for (let i = 0; i < 20; i++) {
+                    createConfetti(e.pageX, e.pageY);
+                }
+                
+                // Create ripple effect
+                createRippleEffect(document.body, e.pageX, e.pageY);
+            });
+            
+            function createConfetti(x, y) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('floating-element');
+                confetti.innerHTML = ['♡', '✦'][Math.floor(Math.random() * 2)];
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+                confetti.style.animation = 'float 5s linear forwards';
+                confetti.style.opacity = Math.random() * 0.5 + 0.5;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+            
+            function createRippleEffect(element, x, y) {
+                const ripple = document.createElement('div');
+                ripple.classList.add('click-indicator');
+                
+                if (element === document.body) {
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                } else {
+                    const rect = element.getBoundingClientRect();
+                    ripple.style.left = (rect.left + rect.width / 2) + 'px';
+                    ripple.style.top = (rect.top + rect.height / 2) + 'px';
+                }
+                
+                document.body.appendChild(ripple);
+                
+                // Start animation
+                setTimeout(() => {
+                    ripple.style.animation = 'clickEffect 0.6s forwards';
+                }, 10);
+                
+                // Remove element after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+        });
+    </script>
+</body>
+</html>
